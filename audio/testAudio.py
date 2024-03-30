@@ -27,7 +27,7 @@ def create_audio():
     os.makedirs(output_directory, exist_ok=True)
 
     # Specify the file path for saving the recording
-    output_file_path = os.path.join(output_directory, "recording1.wav")
+    output_file_path = os.path.join(output_directory, "recording.wav")
 
     # This will convert the NumPy array to an audio
     # file with the given sampling frequency
@@ -44,7 +44,7 @@ def create_audio():
 
     # the path to the local file and the destination object name
     source_file_name = output_file_path
-    destination_blob_name = 'recordings/recording1.wav'
+    destination_blob_name = 'recordings/recording.wav'
 
     # Upload the file
     blob = bucket.blob(destination_blob_name)

@@ -3,7 +3,7 @@ from google.cloud import speech_v1
 
 def transcribe_long_running_audio():
     client = speech_v1.SpeechClient()
-    audio_uri = 'gs://test-yhacks/recordings/recording1.wav'
+    audio_uri = 'gs://test-yhacks/recordings/recording.wav'
 
     # "gu" or "it" or "en-US"
     config = {
@@ -21,7 +21,7 @@ def transcribe_long_running_audio():
 
     # there are multiple alternatives
     transcript = response.results[0].alternatives[0].transcript
-    print("Transcript: " + transcript)
+    return transcript
 
     # print the response alternatives
     # for result in response.results:
