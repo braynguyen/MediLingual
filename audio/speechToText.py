@@ -16,12 +16,12 @@ def transcribe_long_running_audio():
     # analyze the audio
     operation = client.long_running_recognize(config=config, audio=audio)
 
-    print("Waiting for operation to complete...")
+    print("Waiting for transcribing to complete...")
     response = operation.result()
 
     # there are multiple alternatives
     transcript = response.results[0].alternatives[0].transcript
-    print(transcript)
+    print("Transcript: " + transcript)
 
     # print the response alternatives
     # for result in response.results:
