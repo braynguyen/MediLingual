@@ -14,24 +14,14 @@ def create_audio():
     
     # Start recorder with the given values 
     # of duration and sample frequency
-    recording = sd.rec(int(duration * freq), 
-                    samplerate=freq, channels=2)
+    recording = sd.rec(int(duration * freq), samplerate=freq, channels=2)
     
     # Record audio for the given number of seconds
     sd.wait()
 
-    # Directory to save recordings
-    output_directory = "recordings"
-
-    # Ensure the output directory exists
-    os.makedirs(output_directory, exist_ok=True)
-
     # Specify the file path for saving the recording
+    output_directory = "recordings"
     output_file_path = os.path.join(output_directory, "recording.wav")
-
-    # This will convert the NumPy array to an audio
-    # file with the given sampling frequency
-    # write("recordings/recording0.wav", freq, recording)
 
     # Convert the NumPy array to audio file
     wv.write(output_file_path, recording, freq, sampwidth=2)
