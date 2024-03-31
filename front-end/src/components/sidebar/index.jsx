@@ -14,11 +14,17 @@ const Sidebar = ({ open, onClose }) => {
   const [isPatientToggled, setIsPatientToggled] = useState(false);
   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('');
+  const [selectedOptionPatient, setSelectedOptionPatient] = useState('');
 
-  const handleSelect = (event) => {
-    setSelectedOption(event.target.value);
+  const handleSelectLanguageDoctor = (event) => {
+    setSelectedOptionDoctor(event.target.value);
   };
+
+  const handleSelectLanguagePatient = (event) => {
+    setSelectedOptionPatient(event.target.value);
+  };
+
 
   const handlePatientToggle = () => {
     // handle recording 
@@ -61,26 +67,26 @@ const Sidebar = ({ open, onClose }) => {
         </button>
 
         <div className="display inline-flex items-center pt-4">
-                    <IoLanguage className="align-bottom" />
-                    <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
-                        <select
-                            value={selectedOption}
-                            onChange={handleSelect}
-                            className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
-                        >
-                            <option
-                                className="hover:bg-yellow-200"
-                            >Select an option</option>
-                            <option className="hover:bg-yellow-200"
-                            >Option 1</option>
-                            <option className="hover:bg-yellow-200"
-                            >Option 2</option>
-                            <option value="3"
-                                className="hover:bg-yellow-200"
-                            >Option 3</option>
-                        </select>
-                    </div>
-                </div>
+          <IoLanguage className="align-bottom" />
+          <div className="text-xl font-bold text-navy-700 dark:text-w'hite items-center">
+            <select
+              value={selectedOptionPatient}
+              onChange={handleSelectLanguagePatient}
+              className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
+            >
+              <option
+                className="hover:bg-yellow-200"
+              >Select an option</option>
+              <option className="hover:bg-yellow-200"
+              >Option 1</option>
+              <option className="hover:bg-yellow-200"
+              >Option 2</option>
+              <option value="3"
+                className="hover:bg-yellow-200"
+              >Option 3</option>
+            </select>
+          </div>
+        </div>
 
         <button
           className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-yellow-500' : 'bg-purple-700'} rounded-lg flex items-center justify-center`}
@@ -90,26 +96,26 @@ const Sidebar = ({ open, onClose }) => {
         </button>
 
         <div className="display inline-flex items-center pt-4">
-                    <IoLanguage className="align-bottom" />
-                    <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
-                        <select
-                            value={selectedOption}
-                            onChange={handleSelect}
-                            className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
-                        >
-                            <option
-                                className="hover:bg-yellow-200"
-                            >Select an option</option>
-                            <option className="hover:bg-yellow-200"
-                            >Option 1</option>
-                            <option className="hover:bg-yellow-200"
-                            >Option 2</option>
-                            <option value="3"
-                                className="hover:bg-yellow-200"
-                            >Option 3</option>
-                        </select>
-                    </div>
-                </div>
+          <IoLanguage className="align-bottom" />
+          <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
+            <select
+              value={selectedOptionDoctor}
+              onChange={handleSelectLanguageDoctor}
+              className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
+            >
+              <option
+                className="hover:bg-yellow-200"
+              >Select an option</option>
+              <option className="hover:bg-yellow-200"
+              >Option 1</option>
+              <option className="hover:bg-yellow-200"
+              >Option 2</option>
+              <option value="3"
+                className="hover:bg-yellow-200"
+              >Option 3</option>
+            </select>
+          </div>
+        </div>
 
 
 
