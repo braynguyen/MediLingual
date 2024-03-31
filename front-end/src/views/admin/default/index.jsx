@@ -7,9 +7,15 @@ import tableDataCheck from "./variables/tableDataCheck.json";
 
 import TranslateCard from "./components/TranslateCard";
 import SymptomsCard from "./components/SymptomsCard";
+import { useEffect } from "react";
 
 
 const Dashboard = () => {
+
+  useEffect( async () => {
+    const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
+    console.log('Microphone permission status:', permissionStatus.prompt);
+  }, []);
   return (
     <div>
       <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2">
