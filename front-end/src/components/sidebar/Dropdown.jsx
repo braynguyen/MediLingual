@@ -11,13 +11,6 @@ const Dropdown = ({ options, onSelect }) => {
     };
     const [isHovered, setIsHovered] = useState(false);
 
-    const handleMouseEnter = () => {
-    setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-    setIsHovered(false);
-    };
 
 
 
@@ -31,9 +24,7 @@ const Dropdown = ({ options, onSelect }) => {
                     className={'text-xl font-bold text-navy-700 dark:text-white items-center justify-between border border-solid border-3 rounded-lg border-gray-900'}
                 >
                     {options.map((option, index) => (
-                            <option key={index} value={option} className="hover:text-white hover:bg-purple-600 hover:border-gray-300 border-2 rounded-sm p-3"
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
+                            <option key={index} value={option}
                     >
                                 {option}
                             </option>
