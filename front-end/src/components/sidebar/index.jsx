@@ -4,11 +4,21 @@ import Links from "./components/Links";
 import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
 import routes from "routes.js";
 import Switch from "components/switch";
+import { IoLanguage } from "react-icons/io5";
+import { IoPersonCircle } from "react-icons/io5";
+import { IoPersonCircleSharp } from "react-icons/io5";
+
 
 const Sidebar = ({ open, onClose }) => {
   // States for toggling buttons
   const [isPatientToggled, setIsPatientToggled] = useState(false);
   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
+
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleSelect = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const handlePatientToggle = () => {
     // handle recording 
@@ -49,12 +59,61 @@ const Sidebar = ({ open, onClose }) => {
         >
           {/* Patient icon here */}
         </button>
+
+        <div className="display inline-flex items-center pt-4">
+                    <IoLanguage className="align-bottom" />
+                    <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
+                        <select
+                            value={selectedOption}
+                            onChange={handleSelect}
+                            className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
+                        >
+                            <option
+                                className="hover:bg-yellow-200"
+                            >Select an option</option>
+                            <option className="hover:bg-yellow-200"
+                            >Option 1</option>
+                            <option className="hover:bg-yellow-200"
+                            >Option 2</option>
+                            <option value="3"
+                                className="hover:bg-yellow-200"
+                            >Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
         <button
           className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-yellow-500' : 'bg-purple-700'} rounded-lg flex items-center justify-center`}
           onClick={handleDoctorToggle}
         >
           {/* Doctor icon here */}
         </button>
+
+        <div className="display inline-flex items-center pt-4">
+                    <IoLanguage className="align-bottom" />
+                    <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
+                        <select
+                            value={selectedOption}
+                            onChange={handleSelect}
+                            className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
+                        >
+                            <option
+                                className="hover:bg-yellow-200"
+                            >Select an option</option>
+                            <option className="hover:bg-yellow-200"
+                            >Option 1</option>
+                            <option className="hover:bg-yellow-200"
+                            >Option 2</option>
+                            <option value="3"
+                                className="hover:bg-yellow-200"
+                            >Option 3</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+
       </div>
 
     </div>
