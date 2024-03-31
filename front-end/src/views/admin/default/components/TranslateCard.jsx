@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "components/card";
-
+import { MdCheckCircle } from "react-icons/md";
 
 const TranslateCard = (props) => {
   const { titleData, cardTextData } = props;
