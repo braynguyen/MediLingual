@@ -10,7 +10,7 @@ import SymptomsCard from "./components/SymptomsCard";
 import { useEffect } from "react";
 
 
-const Dashboard = ({translatedText, symptomList}) => {
+const Dashboard = ({translatedText, symptomList, liveTranslationTitleText, symptomsTitleText}) => {
   // Need the live translation here and the symptoms list
   
 
@@ -26,7 +26,7 @@ const Dashboard = ({translatedText, symptomList}) => {
         {/* Live Patient Text (what they are saying) */}
         <div>
           <TranslateCard
-            titleData="Live Translation"
+            titleData={liveTranslationTitleText}
             cardTextData={translatedText? translatedText : "Loading...\n\n\n\n\n\n" }
           />
         </div>
@@ -35,6 +35,7 @@ const Dashboard = ({translatedText, symptomList}) => {
         {/* Complex Table , Task & Calendar */}
         {/* Reported Symptoms */}
         <SymptomsCard
+          symptomsTitleText={symptomsTitleText}
           symptomsListData={symptomList}  
         />
         

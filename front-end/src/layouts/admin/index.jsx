@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import Dashboard from "views/admin/default/index";
+import JsonData from 'components/sidebar/languages.json';
 
 export default function Admin(props) {
   const { ...rest } = props;
@@ -51,7 +52,7 @@ export default function Admin(props) {
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/admin") {
-        console.log(prop.path);
+        // console.log(prop);
         return (
           <Route path={`/${prop.path}`} element={prop.component} key={key} />
         );
@@ -154,7 +155,7 @@ export default function Admin(props) {
   };
 
 
-  const [translatedText, setTranslatedText] = useState('Loading...');
+  const [translatedText, setTranslatedText] = useState('...');
   const [symptomList, setSymptomList] = useState([]);
   const callDoctorEndpoint = async (language) => {
     try {
@@ -183,6 +184,8 @@ export default function Admin(props) {
 
   // ------- DASHBOARD State -------
 
+  const langs = Object.keys(JsonData)
+
   document.documentElement.dir = "ltr";
   return (
     <div className="flex h-full w-full">
@@ -209,18 +212,13 @@ export default function Admin(props) {
           {/* Routes */}
           <div className="h-full">
             <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
-              <Routes>
-                {getRoutes(routes)}
-                {/* <Dashboard 
+         
+              <Dashboard
+                  liveTranslationTitleText={JsonData[selectedOptionPatient][0]}
+                  symptomsTitleText={JsonData[selectedOptionPatient][1]}
                   translatedText={translatedText}
                   symptomList={symptomList}
-                /> */}
-
-                <Route
-                  path="/"
-                  element={<Navigate to="/admin/default" replace />}
                 />
-              </Routes>
             </div>
             <div className="p-3">
             </div>

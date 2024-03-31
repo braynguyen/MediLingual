@@ -19,7 +19,7 @@ const TranslateCard = (props) => {
         <Card extra={"w-full h-full sm:overflow-auto px-6"}>
             <div className="flex justify-between display inline-flex">
                 <header className="relative flex items-center justify-between pt-4">
-                    <div className="text-xl font-bold text-navy-700 dark:text-white">
+                    <div className="text-3xl font-bold text-navy-700 dark:text-white">
                         {title}
                     </div>
                 </header>
@@ -27,7 +27,7 @@ const TranslateCard = (props) => {
 
             </div>
 
-            <div className="mt-8 overflow-x-scroll xl:overflow-x-hidden">
+            <div className="text-2xl mt-8 overflow-x-scroll xl:overflow-x-hidden">
                 {cardText}
             </div>
         </Card>
