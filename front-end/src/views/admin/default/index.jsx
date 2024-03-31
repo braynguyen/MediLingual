@@ -20,7 +20,7 @@ const Dashboard = ({translatedText, symptomList, liveTranslationTitleText, sympt
   }, []);
   return (
     <div>
-      <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2 h-[94vh]">
+      <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-2 h-[92vh]">
         {/* Check Table */}
 
         {/* Live Patient Text (what they are saying) */}
