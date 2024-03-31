@@ -1,4 +1,4 @@
-# create an OpenAI API call that removes medical jargon from a given text.
+# create an OpenAI API call that translates from a given langauge into a target language
 #
 
 # The high level goal of this function is to make the doctors response more understandable to the patient.
@@ -12,35 +12,37 @@ import openai
 from openai import OpenAI
 from fixInput import load_env
 
-def removeJargon(str: text) -> str:
+def translateForDoctor(targetLanguage: str, text: str) -> str:
     env_vars = load_env()
     client = OpenAI(
         api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
     )
 
-    prompt = "Your job is to translate the medical jargon into layman's terms. Here are a few examples of medical jargon to layman term's mappings: "
-    prompt += "1. 'Myocardial infarction' -> 'heart attack' "
-    prompt += "2. 'Hypertension' -> 'high blood pressure' "
-    prompt += "3. 'Hyperlipidemia' -> 'high cholesterol' "
-    prompt += "4. 'Atherosclerosis' -> 'hardening of the arteries' "
-    prompt += "5. 'Cerebrovascular accident' -> 'stroke' "
-    prompt += "6. 'Gastrointestinal' -> 'digestive system' "
-    prompt += "7. 'Gastroenteritis' -> 'stomach flu' "
-
-
-    prompt1 = "The following text is a doctor's words to a patient that contains medical jargon. Please translate the medical jargon into layman's terms. Include nothing else in your response."
-
-    prompt1 += text
-
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": prompt1}
+            {"role": "system", "content": "You are a translator. Translate the following text into " + targetLanguage + ". Output the translated text as a JSON object with the key 'translation' which contains the translation."},
+            {"role": "user", "content": text}
         ]
     )
 
     # returns just the text
     return completion.choices[0].message.content.strip('"')
 
-    return text
+
+def translateForPatient(targetLanguage: str, text: str) -> str:
+    env_vars = load_env()
+    client = OpenAI(
+        api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
+    )
+
+    completion = client.chat.completions.create(
+    model="gpt-3.5-turbo",
+    messages=[
+            {"role": "system", "content": "You are a translator. Translate the following text into " + targetLanguage + ". Output the translated text as a JSON object with the key 'translation' which contains the translation and a key `symptoms` that contains a list of symptoms the patient is describing. If the patient does not describe any symptoms the value for the `symptoms` key should be an empty list."},
+            {"role": "user", "content": text}
+        ]
+    )
+
+    # returns just the text
+    return completion.choices[0].message.content.strip('"')
