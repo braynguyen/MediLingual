@@ -200,6 +200,8 @@ export default function Admin(props) {
         handleSelectLanguagePatient={handleSelectLanguagePatient}
         togglePatientRecording={togglePatientRecording}
         toggleDoctorRecording={toggleDoctorRecording}
+        isPatientToggled={isPatientToggled}
+        isDoctorToggled={isDoctorToggled}
 
         />
       {/* Navbar & Main Content */}
