@@ -37,7 +37,7 @@ def patient(language):
     #     "translation": "translated text",
     #     "symptoms": ["symptom1", "symptom2", "symptom3"]
     # }
-    translated_to_patient_lang = translate(language, fixed_input)
+    translated_to_patient_lang = translateForPatient(language, fixed_input)
 
     return translated_to_patient_lang
 
