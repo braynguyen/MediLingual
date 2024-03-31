@@ -1,6 +1,6 @@
 import { columnsDataCheck, columnsDataComplex } from "./variables/columnsData";
 
-import CheckTable from "views/admin/default/components/CheckTable";
+
 
 import TaskCard from "views/admin/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck.json";
@@ -49,19 +49,8 @@ const Dashboard = () => {
         />
 
         {/*  */}
-        <div>
-          <CheckTable
-            columnsData={columnsDataCheck}
-            tableData={tableDataCheck}
-          />
-        </div>
 
-        <div>
-          <CheckTable
-            columnsData={columnsDataCheck}
-            tableData={tableDataCheck}
-          />
-        </div>
+
 
         {/* Task chart & Calendar */}
 
