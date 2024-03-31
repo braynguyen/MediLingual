@@ -41,19 +41,6 @@ const Dashboard = () => {
             "Diarrhea",
           ]}  
         />
-        <TaskCard
-          title="Reported Symptoms"
-          task1="Landing Page Design"
-          task2="Mobile App Design"
-          task3="Dashboard Builder"
-        />
-
-        {/*  */}
-
-
-
-        {/* Task chart & Calendar */}
-
         
     </div>
   </div>
