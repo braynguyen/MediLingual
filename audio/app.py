@@ -1,5 +1,5 @@
 from speechToText import transcribe_long_running_audio
-from testAudio import create_audio
+from recordAudio import create_audio
 from fixInput import fix_input
 
 def main():

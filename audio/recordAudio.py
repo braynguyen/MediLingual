@@ -1,6 +1,6 @@
 import os
 import sounddevice as sd
-from scipy.io.wavfile import write
+# from scipy.io.wavfile import write
 import wavio as wv
 from google.cloud import storage
  
@@ -10,7 +10,7 @@ def create_audio():
     freq = 44100
     
     # Recording duration
-    duration = 10
+    duration = 5
     
     # Start recorder with the given values 
     # of duration and sample frequency
@@ -51,3 +51,7 @@ def create_audio():
     blob.upload_from_filename(source_file_name)
 
     print("Audio Uploaded.\n")
+
+
+if __name__ == "__main__":
+    create_audio()

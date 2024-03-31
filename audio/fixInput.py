@@ -14,9 +14,7 @@ def load_env(filename=".env"):
 
 def fix_input(text):
     env_vars = load_env()
-    # open_ai_key = env_vars.get("QUENTINS_OPEN_AI_KEY")
     client = OpenAI(
-    # This is the default and can be omitted
         api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
     )
 
@@ -28,10 +26,11 @@ def fix_input(text):
         ]
     )
 
-    print(completion.choices[0].message.content.strip('"'))
+    # returns just the text
+    return completion.choices[0].message.content.strip('"')
 
 
 if __name__ == "__main__":
     text = input("Give an example prompt to clean up:\n")
 
-    fix_input(text)
+    print(fix_input(text))
