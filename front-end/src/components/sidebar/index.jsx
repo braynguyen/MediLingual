@@ -32,7 +32,7 @@ const Sidebar = ({ open, onClose }) => {
 
     recorder.onstop = async () => {
         // Ensure you create the Blob here, once recording is stopped and data is fully available
-        const audioBlob = new Blob(tempChunks, { type: 'audio/wav' });
+        const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
         await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
         // Reset audioChunks state if necessary, or handle accordingly
     };
@@ -76,8 +76,8 @@ const stopRecording = () => {
     if (!isToggled) {
       await startRecording();
     } else {
-      const audioBlob = await stopRecording();
-      await uploadAudio(audioBlob);
+      // const audioBlob = await stopRecording();
+      // await uploadAudio(audioBlob);
       const response = isToggled === isPatientToggled ? await callPatientEndpoint(selectedOptionPatient) : await callDoctorEndpoint(selectedOptionDoctor);
       console.log(response);
     }
