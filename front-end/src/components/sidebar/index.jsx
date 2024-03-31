@@ -12,8 +12,8 @@ const Sidebar = ({ open, onClose }) => {
   const [isPatientToggled, setIsPatientToggled] = useState(false);
   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
 
-  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('');
-  const [selectedOptionPatient, setSelectedOptionPatient] = useState('');
+  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('English');
+  const [selectedOptionPatient, setSelectedOptionPatient] = useState('English');
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
 
@@ -82,7 +82,7 @@ const stopRecording = () => {
     } else {
       const audioBlob = await stopRecording();
       // await uploadAudio(audioBlob);
-      const response = await callPatientEndpoint(selectedOptionPatient);
+      const response = await callPatientEndpoint(selectedOptionDoctor);
       console.log(response);
     }
     setIsPatientToggled(!isPatientToggled);
