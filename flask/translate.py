@@ -12,7 +12,7 @@ import openai
 from openai import OpenAI
 from fixInput import load_env
 
-def translateForDoctor(str: targetLanguage, str: text) -> str:
+def translateForDoctor(targetLanguage: str, text: str) -> str:
     env_vars = load_env()
     client = OpenAI(
         api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
@@ -29,9 +29,8 @@ def translateForDoctor(str: targetLanguage, str: text) -> str:
     # returns just the text
     return completion.choices[0].message.content.strip('"')
 
-    return text
 
-def translateForPatient(str: targetLanguage, str: text) -> str:
+def translateForPatient(targetLanguage: str, text: str) -> str:
     env_vars = load_env()
     client = OpenAI(
         api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
@@ -47,5 +46,3 @@ def translateForPatient(str: targetLanguage, str: text) -> str:
 
     # returns just the text
     return completion.choices[0].message.content.strip('"')
-
-    return text
