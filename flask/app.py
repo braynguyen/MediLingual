@@ -2,6 +2,7 @@ from flask import app, Flask
 from speechToText import transcribe_long_running_audio
 from recordAudio import create_audio
 from fixInput import fix_input
+from removeJargon import removeJargon
 from translate import translateForDoctor
 from translate import translateForPatient
 
