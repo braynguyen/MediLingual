@@ -2,7 +2,6 @@ import { columnsDataCheck, columnsDataComplex } from "./variables/columnsData";
 import CheckTable from "views/admin/default/components/CheckTable";
 import TaskCard from "views/admin/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck.json";
-import Sidebar from "components/sidebar";
 
 
 const Dashboard = () => {
