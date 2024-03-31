@@ -4,14 +4,26 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { HiX } from "react-icons/hi";
 import { IoLanguage, IoMicOutline, IoMicOffOutline } from "react-icons/io5";
+import Dropdown from './Dropdown';
+import JsonData from './languages.json'
 
 const Sidebar = ({ open, onClose }) => {
+  const langs = Object.keys(JsonData)
   const [isPatientToggled, setIsPatientToggled] = useState(false);
   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
-  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('English');
-  const [selectedOptionPatient, setSelectedOptionPatient] = useState('English');
+
+  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('');
+  const [selectedOptionPatient, setSelectedOptionPatient] = useState('');
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
+
+  const handleSelectLanguageDoctor = (option) => {
+    setSelectedOptionDoctor(option);
+  };
+
+  const handleSelectLanguagePatient = (option) => {
+    setSelectedOptionPatient(option);
+  };
 
   useEffect(() => {
     return () => {
@@ -40,11 +52,11 @@ const Sidebar = ({ open, onClose }) => {
 
   const uploadAudio = async (audioBlob) => {
     const formData = new FormData();
-    console.log("audioBlob: ",audioBlob);
+    console.log("audioBlob: ", audioBlob);
     formData.append('audio_file', audioBlob);
     try {
       const response = await axios.post('http://localhost:5000/upload', formData, {
-        headers: {'Content-Type': 'multipart/form-data'},
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log(response.data);
     } catch (error) {
@@ -86,14 +98,6 @@ const Sidebar = ({ open, onClose }) => {
     return "Patient endpoint called";
   };
 
-  const handleSelectLanguageDoctor = (event) => {
-    setSelectedOptionDoctor(event.target.value);
-  };
-
-  const handleSelectLanguagePatient = (event) => {
-    setSelectedOptionPatient(event.target.value);
-  };
-
   return (
     <div className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${open ? "translate-x-0" : "-translate-x-96"}`}>
       <span className="absolute top-4 right-4 block cursor-pointer xl:hidden" onClick={onClose}>
@@ -116,19 +120,10 @@ const Sidebar = ({ open, onClose }) => {
           <span className="pl-4 text-white font-bold">Patient</span>
         </button>
 
-        <div className="inline-flex items-center pt-4">
-          <IoLanguage className="text-2xl text-navy-700 dark:text-white" />
-          <select
-            value={selectedOptionPatient}
-            onChange={handleSelectLanguagePatient}
-            className="ml-2 text-xl font-bold text-navy-700 dark:text-white"
-          >
-            <option>Select an option</option>
-            <option>English</option>
-            <option>Italian</option>
-            <option value="3">Gujarati</option>
-          </select>
-        </div>
+        <Dropdown
+          options={langs}
+          onSelect={handleSelectLanguagePatient}
+        />
 
         <button
           className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-red-600 shadow-xl' : 'bg-blue-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
@@ -138,19 +133,10 @@ const Sidebar = ({ open, onClose }) => {
           <span className="pl-4 text-white font-bold">Doctor</span>
         </button>
 
-        <div className="inline-flex items-center pt-4">
-          <IoLanguage className="text-2xl text-navy-700 dark:text-white" />
-          <select
-            value={selectedOptionDoctor}
-            onChange={handleSelectLanguageDoctor}
-            className="ml-2 text-xl font-bold text-navy-700 dark:text-white"
-          >
-            <option>Select an option</option>
-            <option>English</option>
-            <option>Italian</option>
-            <option value="3">Gujarati</option>
-          </select>
-        </div>
+        <Dropdown
+          options={langs}
+          onSelect={handleSelectLanguageDoctor}
+        />
       </div>
     </div>
   );
