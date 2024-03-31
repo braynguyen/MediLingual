@@ -18,7 +18,7 @@ def speech_to_text():
         api_key=env_vars.get("QUENTINS_OPEN_AI_KEY"),
     )
 
-    audio_file= open("flask/recordings/recording.wav", "rb")
+    audio_file= open("flask/recordings/recording.webm", "rb")
     transcription = client.audio.translations.create(
         model="whisper-1", 
         file=audio_file
