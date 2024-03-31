@@ -20,33 +20,33 @@ const Sidebar = ({ open, onClose }) => {
   }, [mediaRecorder]);
 
   const startRecording = async () => {
-    setAudioChunks([]);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const recorder = new MediaRecorder(stream);
+    let tempChunks = [];
+
     recorder.ondataavailable = event => {
-      console.log(`Chunk received: size=${event.data.size}`);
-      console.log("event.data:", event.data);
-      if (event.data.size > 0) {
-        setAudioChunks(audioChunks => [...audioChunks, event.data]);
-        console.log("audioChunk BEFORE: ",audioChunks);
-      }
-      console.log("audioChunk AFTER: ",audioChunks);
+        if (event.data.size > 0) {
+            tempChunks.push(event.data);
+        }
     };
-    
+
+    recorder.onstop = async () => {
+        // Ensure you create the Blob here, once recording is stopped and data is fully available
+        const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
+        await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
+        // Reset audioChunks state if necessary, or handle accordingly
+    };
+
     recorder.start();
     setMediaRecorder(recorder);
-  };
+};
 
-  const stopRecording = () => {
-    return new Promise(resolve => {
-      mediaRecorder.onstop = () => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        console.log("audioChunks: ",audioChunks);
-        resolve(audioBlob);
-      };
-      mediaRecorder.stop();
-    });
-  };
+const stopRecording = () => {
+    if (mediaRecorder) {
+        mediaRecorder.stop(); // This will eventually trigger the onstop event
+    }
+};
+
 
   const uploadAudio = async (audioBlob) => {
     const formData = new FormData();
