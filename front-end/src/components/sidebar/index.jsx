@@ -32,7 +32,7 @@ const Sidebar = ({ open, onClose }) => {
 
     recorder.onstop = async () => {
         // Ensure you create the Blob here, once recording is stopped and data is fully available
-        const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
+        const audioBlob = new Blob(tempChunks, { type: 'audio/wav' });
         await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
         // Reset audioChunks state if necessary, or handle accordingly
     };
