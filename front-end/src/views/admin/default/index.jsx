@@ -15,6 +15,10 @@ import DailyTraffic from "views/admin/default/components/DailyTraffic";
 import TaskCard from "views/admin/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck.json";
 import tableDataComplex from "./variables/tableDataComplex.json";
+import Sidebar from "components/sidebar";
+import Card from "components/card";
+import TranslateCard from "./components/TranslateCard";
+
 
 const Dashboard = () => {
   return (
@@ -24,9 +28,9 @@ const Dashboard = () => {
 
         {/* Live Patient Text (what they are saying) */}
         <div>
-          <CheckTable
-            columnsData={columnsDataCheck}
-            tableData={tableDataCheck}
+          <TranslateCard
+            titleData="Live Translation"
+            cardTextData="This is the translation of what the patient is saying."
           />
         </div>
 
@@ -58,10 +62,8 @@ const Dashboard = () => {
         {/* Task chart & Calendar */}
 
         
-        {/* <div className="grid grid-cols-1 rounded-[20px]"> */}
-
-      </div>
     </div>
+  </div>
   );
 };
 

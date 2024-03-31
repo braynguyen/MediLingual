@@ -14,7 +14,7 @@ const TaskCard = () => {
             <MdCheckCircle className="h-6 w-6 text-brand-500 dark:text-white" />
           </div>
           <h4 className="ml-4 text-xl font-bold text-navy-700 dark:text-white">
-            Reported Symptoms
+            Reported Symptoms (Task Card)
           </h4>
         </div>
         <CardMenu />
