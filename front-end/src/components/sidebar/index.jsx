@@ -23,7 +23,16 @@ const Sidebar = ({ open, onClose }) => {
     setAudioChunks([]);
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const recorder = new MediaRecorder(stream);
-    recorder.ondataavailable = e => setAudioChunks(prev => [...prev, e.data]);
+    recorder.ondataavailable = event => {
+      console.log(`Chunk received: size=${event.data.size}`);
+      console.log("event.data:", event.data);
+      if (event.data.size > 0) {
+        setAudioChunks(audioChunks => [...audioChunks, event.data]);
+        console.log("audioChunk BEFORE: ",audioChunks);
+      }
+      console.log("audioChunk AFTER: ",audioChunks);
+    };
+    
     recorder.start();
     setMediaRecorder(recorder);
   };
@@ -32,6 +41,7 @@ const Sidebar = ({ open, onClose }) => {
     return new Promise(resolve => {
       mediaRecorder.onstop = () => {
         const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        console.log("audioChunks: ",audioChunks);
         resolve(audioBlob);
       };
       mediaRecorder.stop();
