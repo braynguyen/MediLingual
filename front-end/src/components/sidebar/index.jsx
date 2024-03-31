@@ -4,9 +4,6 @@ import Links from "./components/Links";
 import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
 import routes from "routes.js";
 import Switch from "components/switch";
-import { IoLanguage } from "react-icons/io5";
-import { IoPersonCircle } from "react-icons/io5";
-import { IoPersonCircleSharp } from "react-icons/io5";
 import axios from 'axios';
 import { IoLanguage, IoMicOutline, IoMicOffOutline } from "react-icons/io5";
 
