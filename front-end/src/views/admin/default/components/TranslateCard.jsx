@@ -16,7 +16,7 @@ const TranslateCard = (props) => {
 
 
     return (
-        <Card extra={"w-full h-full sm:overflow-auto px-6"}>
+        <Card extra={"w-full h-full sm:overflow-auto px-6 h-full"}>
             <div className="flex justify-between display inline-flex">
                 <header className="relative flex items-center justify-between pt-4">
                     <div className="text-3xl font-bold text-navy-700 dark:text-white">

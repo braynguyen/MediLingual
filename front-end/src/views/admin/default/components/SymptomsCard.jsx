@@ -10,7 +10,7 @@ const SymptomsCard = (props) => {
     const symptomsList = symptomsListData? symptomsListData : [];
 
   return (
-    <Card extra="pb-7 p-[20px] h-96">
+    <Card extra="pb-7 p-[20px] h-full">
       {/* task header */}
       <div className="relative flex flex-row justify-between ">
         <div className="flex items-center">
