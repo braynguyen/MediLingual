@@ -19,7 +19,7 @@ def upload_audio():
     audio_file = request.files['audio_file']
     
 
-    audio_file.save('flask/recordings/recording.webm')
+    audio_file.save('flask/recordings/recording.wav')
 
     return "audio file saved", 200
 
