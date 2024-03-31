@@ -7,6 +7,7 @@ import Switch from "components/switch";
 import { IoLanguage } from "react-icons/io5";
 import { IoPersonCircle } from "react-icons/io5";
 import { IoPersonCircleSharp } from "react-icons/io5";
+import axios from 'axios';
 
 
 const Sidebar = ({ open, onClose }) => {
@@ -25,21 +26,104 @@ const Sidebar = ({ open, onClose }) => {
     setSelectedOptionPatient(event.target.value);
   };
 
+  const [recording, setRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioChunks, setAudioChunks] = useState([]);
+  const [audioBlob, setAudioBlob] = useState(null);
 
-  const handlePatientToggle = () => {
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      recorder.addEventListener('dataavailable', (event) => {
+        setAudioChunks([...audioChunks, event.data]);
+      });
+      recorder.start();
+      setMediaRecorder(recorder);
+      setRecording(true);
+    } catch (error) {
+      console.error('Error recording audio:', error);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+      setRecording(false);
+    }
+  };
+
+  const uploadAudio = async () => {
+    try {
+      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      setAudioBlob(audioBlob);
+
+      const formData = new FormData();
+      formData.append('audio_file', audioBlob);
+
+      const response = await axios.post('/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      console.log(response.data); // Should print "audio file saved" if successful
+    } catch (error) {
+      console.error('Error uploading audio:', error);
+    }
+  };
+
+  const callDoctorEndpoint = async (language) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/doctor/${language}`);
+      return response.data; // Assuming the response is JSON data
+    } catch (error) {
+      console.error('Error calling doctor endpoint:', error);
+      return null;
+    }
+  };
+
+  const callPatientEndpoint = async (language) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/patient/${language}`);
+      return response.data; // Assuming the response is JSON data
+    } catch (error) {
+      console.error('Error calling doctor endpoint:', error);
+      return null;
+    }
+  };
+
+  const handlePatientToggle = async () => {
     // handle recording 
+    if (isPatientToggled) {
+      startRecording();
+    } else {
+      stopRecording();
+      await uploadAudio();
+      const patientTranslation = await callPatientEndpoint();
+      console.log(patientTranslation);
+      // SEND THIS TO THE TRANSLATION AND SYMPTOMS CARD
+    }
 
-    // setIsDoctorToggled(!isDoctorToggled)
     setIsPatientToggled(!isPatientToggled)
   };
 
-  const handleDoctorToggle = () => {
+  const handleDoctorToggle  = async () => {
     // handle recording 
-
+    if (isDoctorToggled) {
+      startRecording();
+    } else {
+      stopRecording();
+      await uploadAudio();
+      const doctorTranslation = await callDoctorEndpoint();
+      console.log(doctorTranslation);
+      // SEND THIS TO THE TRANSLATION
+    }
 
     setIsDoctorToggled(!isDoctorToggled)
-    // setIsPatientToggled(!isPatientToggled)
   };
+
+
 
   return (
     <div className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${open ? "translate-x-0" : "-translate-x-96"}`}>
