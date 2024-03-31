@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { HiX } from "react-icons/hi";
-import Links from "./components/Links";
-import SidebarCard from "components/sidebar/componentsrtl/SidebarCard";
-import routes from "routes.js";
-import Switch from "components/switch";
-import { IoLanguage } from "react-icons/io5";
-import { IoPersonCircle } from "react-icons/io5";
-import { IoPersonCircleSharp } from "react-icons/io5";
-
+import { IoLanguage, IoMicOutline, IoMicOffOutline } from "react-icons/io5";
 
 const Sidebar = ({ open, onClose }) => {
-  // States for toggling buttons
   const [isPatientToggled, setIsPatientToggled] = useState(false);
   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
 
@@ -25,20 +17,12 @@ const Sidebar = ({ open, onClose }) => {
     setSelectedOptionPatient(event.target.value);
   };
 
-
   const handlePatientToggle = () => {
-    // handle recording 
-
-    // setIsDoctorToggled(!isDoctorToggled)
-    setIsPatientToggled(!isPatientToggled)
+    setIsPatientToggled(!isPatientToggled);
   };
 
   const handleDoctorToggle = () => {
-    // handle recording 
-
-
-    setIsDoctorToggled(!isDoctorToggled)
-    // setIsPatientToggled(!isPatientToggled)
+    setIsDoctorToggled(!isDoctorToggled);
   };
 
   return (
@@ -60,68 +44,49 @@ const Sidebar = ({ open, onClose }) => {
       {/* Toggle Buttons */}
       <div className="flex flex-col items-center justify-center flex-grow">
         <button
-          className={`w-64 h-64 aspect-ratio-1 ${isPatientToggled ? 'bg-green-500' : 'bg-blue-500'} rounded-lg flex items-center justify-center`}
+          className={`w-64 h-64 aspect-ratio-1 ${isPatientToggled ? 'bg-red-600 shadow-xl' : 'bg-green-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
           onClick={handlePatientToggle}
         >
-          {/* Patient icon here */}
+          {isPatientToggled ? <IoMicOutline className="text-white text-6xl" /> : <IoMicOffOutline className="text-white text-6xl" />}
         </button>
 
-        <div className="display inline-flex items-center pt-4">
-          <IoLanguage className="align-bottom" />
-          <div className="text-xl font-bold text-navy-700 dark:text-w'hite items-center">
-            <select
-              value={selectedOptionPatient}
-              onChange={handleSelectLanguagePatient}
-              className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
-            >
-              <option
-                className="hover:bg-yellow-200"
-              >Select an option</option>
-              <option className="hover:bg-yellow-200"
-              >Option 1</option>
-              <option className="hover:bg-yellow-200"
-              >Option 2</option>
-              <option value="3"
-                className="hover:bg-yellow-200"
-              >Option 3</option>
-            </select>
-          </div>
+        {/* Selection for Patient */}
+        <div className="inline-flex items-center pt-4">
+          <IoLanguage className="text-2xl text-navy-700 dark:text-white" />
+          <select
+            value={selectedOptionPatient}
+            onChange={handleSelectLanguagePatient}
+            className="ml-2 text-xl font-bold text-navy-700 dark:text-white"
+          >
+            <option>Select an option</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
         </div>
 
         <button
-          className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-yellow-500' : 'bg-purple-700'} rounded-lg flex items-center justify-center`}
+          className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-red-600 shadow-xl' : 'bg-blue-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
           onClick={handleDoctorToggle}
         >
-          {/* Doctor icon here */}
+          {isDoctorToggled ? <IoMicOutline className="text-white text-6xl" /> : <IoMicOffOutline className="text-white text-6xl" />}
         </button>
 
-        <div className="display inline-flex items-center pt-4">
-          <IoLanguage className="align-bottom" />
-          <div className="text-xl font-bold text-navy-700 dark:text-white items-center">
-            <select
-              value={selectedOptionDoctor}
-              onChange={handleSelectLanguageDoctor}
-              className="text-xl font-bold text-navy-700 dark:text-white items-center justify-between"
-            >
-              <option
-                className="hover:bg-yellow-200"
-              >Select an option</option>
-              <option className="hover:bg-yellow-200"
-              >Option 1</option>
-              <option className="hover:bg-yellow-200"
-              >Option 2</option>
-              <option value="3"
-                className="hover:bg-yellow-200"
-              >Option 3</option>
-            </select>
-          </div>
+        {/* Selection for Doctor */}
+        <div className="inline-flex items-center pt-4">
+          <IoLanguage className="text-2xl text-navy-700 dark:text-white" />
+          <select
+            value={selectedOptionDoctor}
+            onChange={handleSelectLanguageDoctor}
+            className="ml-2 text-xl font-bold text-navy-700 dark:text-white"
+          >
+            <option>Select an option</option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option value="3">Option 3</option>
+          </select>
         </div>
-
-
-
-
       </div>
-
     </div>
   );
 };
