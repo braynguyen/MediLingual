@@ -19,6 +19,8 @@ def upload_audio():
 
     audio_file.save('flask/recordings/recording.wav')
 
+    return "audio file saved", 200
+
 
 @app.route("/doctor/<string:language>", methods=["GET"])
 def doctor(language):
