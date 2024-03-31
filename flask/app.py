@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/doctor")
 def main():
-    create_audio()
+    # create_audio()
 
     text = transcribe_long_running_audio()
 
