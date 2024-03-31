@@ -85,15 +85,23 @@ const stopRecording = () => {
   };
 
   const callDoctorEndpoint = async (language) => {
-    // Placeholder for the actual API call
-    console.log(`Calling doctor endpoint with language: ${language}`);
-    return "Doctor endpoint called";
+    try {
+      const response = await axios.get(`http://localhost:5000/doctor/${language}`);
+      return response.data; // Assuming the response is JSON data
+    } catch (error) {
+      console.error('Error calling doctor endpoint:', error);
+      return null;
+    }
   };
 
   const callPatientEndpoint = async (language) => {
-    // Placeholder for the actual API call
-    console.log(`Calling patient endpoint with language: ${language}`);
-    return "Patient endpoint called";
+    try {
+      const response = await axios.get(`http://localhost:5000/patient/${language}`);
+      return response.data; // Assuming the response is JSON data
+    } catch (error) {
+      console.error('Error calling doctor endpoint:', error);
+      return null;
+    }
   };
 
   const handleSelectLanguageDoctor = (event) => {
