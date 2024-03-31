@@ -6,8 +6,10 @@ from fixInput import fix_input
 from removeJargon import removeJargon
 from translate import translateForDoctor
 from translate import translateForPatient
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins='http://localhost:3000')
 
 @app.route('/upload', methods=['POST'])
 def upload_audio():
