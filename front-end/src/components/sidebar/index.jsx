@@ -35,6 +35,7 @@ const Sidebar = ({ open, onClose }) => {
         const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
         await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
         // Reset audioChunks state if necessary, or handle accordingly
+        tempChunks = [];
     };
 
     recorder.start();
@@ -50,7 +51,7 @@ const stopRecording = () => {
 
   const uploadAudio = async (audioBlob) => {
     const formData = new FormData();
-    console.log("audioBlob: ",audioBlob);
+    // console.log("audioBlob: ",audioBlob);
     formData.append('audio_file', audioBlob);
     try {
       const response = await axios.post('http://localhost:5000/upload', formData, {
@@ -64,25 +65,29 @@ const stopRecording = () => {
   };
 
   const togglePatientRecording = async () => {
-    await toggleRecording(isPatientToggled, setIsPatientToggled);
+    if (!isPatientToggled) {
+      await startRecording();
+    } else {
+      const audioBlob = await stopRecording();
+      // await uploadAudio(audioBlob);
+      const response = await callPatientEndpoint(selectedOptionPatient);
+      console.log(response);
+    }
+    setIsPatientToggled(!isPatientToggled);
   };
 
   const toggleDoctorRecording = async () => {
-    await toggleRecording(isDoctorToggled, setIsDoctorToggled);
-  };
-
-  // Reusable toggle function for both patient and doctor recording
-  const toggleRecording = async (isToggled, setToggled) => {
-    if (!isToggled) {
+    if (!isDoctorToggled) {
       await startRecording();
     } else {
-      // const audioBlob = await stopRecording();
+      const audioBlob = await stopRecording();
       // await uploadAudio(audioBlob);
-      const response = isToggled === isPatientToggled ? await callPatientEndpoint(selectedOptionPatient) : await callDoctorEndpoint(selectedOptionDoctor);
+      const response = await callDoctorEndpoint(selectedOptionPatient);
       console.log(response);
     }
-    setToggled(!isToggled);
+    setIsDoctorToggled(!isDoctorToggled);
   };
+
 
   const callDoctorEndpoint = async (language) => {
     try {
@@ -127,10 +132,10 @@ const stopRecording = () => {
 
       <div className="flex flex-col items-center justify-center flex-grow">
         <button
-          className={`w-64 h-64 aspect-ratio-1 ${isPatientToggled ? 'bg-red-600 shadow-xl' : 'bg-green-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
+          className={`w-64 h-64 aspect-ratio-1 ${!isPatientToggled ? 'bg-red-600 shadow-xl' : 'bg-green-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
           onClick={togglePatientRecording}
         >
-          {isPatientToggled ? <IoMicOffOutline className="text-white text-6xl" /> : <IoMicOutline className="text-white text-6xl" />}
+          {!isPatientToggled ? <IoMicOffOutline className="text-white text-6xl" /> : <IoMicOutline className="text-white text-6xl" />}
           <span className="pl-4 text-white font-bold">Patient</span>
         </button>
 
@@ -149,10 +154,10 @@ const stopRecording = () => {
         </div>
 
         <button
-          className={`mt-4 w-64 h-64 aspect-ratio-1 ${isDoctorToggled ? 'bg-red-600 shadow-xl' : 'bg-blue-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
+          className={`mt-4 w-64 h-64 aspect-ratio-1 ${!isDoctorToggled ? 'bg-red-600 shadow-xl' : 'bg-blue-500 shadow'} rounded-lg flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105`}
           onClick={toggleDoctorRecording}
         >
-          {isDoctorToggled ? <IoMicOffOutline className="text-white text-6xl" /> : <IoMicOutline className="text-white text-6xl" />}
+          {!isDoctorToggled ? <IoMicOffOutline className="text-white text-6xl" /> : <IoMicOutline className="text-white text-6xl" />}
           <span className="pl-4 text-white font-bold">Doctor</span>
         </button>
 
