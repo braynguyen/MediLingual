@@ -1,4 +1,4 @@
-from flask import app, Flask
+from flask import app, Flask, request
 # from speechToText import transcribe_long_running_audio
 from testOpenAISTT import speech_to_text
 from recordAudio import create_audio
@@ -8,6 +8,17 @@ from translate import translateForDoctor
 from translate import translateForPatient
 
 app = Flask(__name__)
+
+@app.route('/upload', methods=['POST'])
+def upload_audio():
+    if 'audio_file' not in request.files:
+        return 'No audio file provided', 400
+
+    audio_file = request.files['audio_file']
+    
+
+    audio_file.save('flask/recordings/recording.wav')
+
 
 @app.route("/doctor/<string:language>", methods=["GET"])
 def doctor(language):
