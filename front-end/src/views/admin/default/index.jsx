@@ -1,23 +1,12 @@
-import MiniCalendar from "components/calendar/MiniCalendar";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import PieChartCard from "views/admin/default/components/PieChartCard";
-import { IoMdHome } from "react-icons/io";
-import { IoDocuments } from "react-icons/io5";
-import { MdBarChart, MdDashboard } from "react-icons/md";
-
 import { columnsDataCheck, columnsDataComplex } from "./variables/columnsData";
 
-import Widget from "components/widget/Widget";
 import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
+
 import TaskCard from "views/admin/default/components/TaskCard";
 import tableDataCheck from "./variables/tableDataCheck.json";
-import tableDataComplex from "./variables/tableDataComplex.json";
-import Sidebar from "components/sidebar";
-import Card from "components/card";
+
 import TranslateCard from "./components/TranslateCard";
+import SymptomsCard from "./components/SymptomsCard";
 
 
 const Dashboard = () => {
@@ -37,6 +26,21 @@ const Dashboard = () => {
         
         {/* Complex Table , Task & Calendar */}
         {/* Reported Symptoms */}
+        <SymptomsCard
+          symptomsListData={[
+            "Fever",
+            "Cough",
+            "Shortness of Breath",
+            "Fatigue",
+            "Muscle or Body Aches",
+            "Headache",
+            "New Loss of Taste or Smell",
+            "Sore Throat",
+            "Congestion or Runny Nose",
+            "Nausea or Vomiting",
+            "Diarrhea",
+          ]}  
+        />
         <TaskCard
           title="Reported Symptoms"
           task1="Landing Page Design"
