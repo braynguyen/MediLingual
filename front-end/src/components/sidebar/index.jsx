@@ -8,7 +8,6 @@ import { IoLanguage } from "react-icons/io5";
 import { IoPersonCircle } from "react-icons/io5";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import axios from 'axios';
-
 import { IoLanguage, IoMicOutline, IoMicOffOutline } from "react-icons/io5";
 
 const Sidebar = ({ open, onClose }) => {
@@ -61,7 +60,7 @@ const Sidebar = ({ open, onClose }) => {
       const formData = new FormData();
       formData.append('audio_file', audioBlob);
 
-      const response = await axios.post('/upload', formData, {
+      const response = await axios.post('http://localhost:5000/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
