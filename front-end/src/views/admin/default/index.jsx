@@ -10,7 +10,9 @@ import SymptomsCard from "./components/SymptomsCard";
 import { useEffect } from "react";
 
 
-const Dashboard = () => {
+const Dashboard = ({translatedText, symptomList}) => {
+  // Need the live translation here and the symptoms list
+  
 
   useEffect( async () => {
     const permissionStatus = await navigator.permissions.query({ name: 'microphone' });
@@ -25,7 +27,7 @@ const Dashboard = () => {
         <div>
           <TranslateCard
             titleData="Live Translation"
-            cardTextData="This is the translation of what the patient is saying."
+            cardTextData={translatedText? translatedText : "Loading...\n\n\n\n\n\n" }
           />
         </div>
 
@@ -33,19 +35,7 @@ const Dashboard = () => {
         {/* Complex Table , Task & Calendar */}
         {/* Reported Symptoms */}
         <SymptomsCard
-          symptomsListData={[
-            "Fever",
-            "Cough",
-            "Shortness of Breath",
-            "Fatigue",
-            "Muscle or Body Aches",
-            "Headache",
-            "New Loss of Taste or Smell",
-            "Sore Throat",
-            "Congestion or Runny Nose",
-            "Nausea or Vomiting",
-            "Diarrhea",
-          ]}  
+          symptomsListData={symptomList}  
         />
         
     </div>

@@ -1,125 +1,141 @@
 
 // export default Sidebar;
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+
 import { HiX } from "react-icons/hi";
 import { IoLanguage, IoMicOutline, IoMicOffOutline } from "react-icons/io5";
 import Dropdown from './Dropdown';
 import JsonData from './languages.json'
 
-const Sidebar = ({ open, onClose }) => {
+const Sidebar = ({ open, 
+  isPatientToggled,
+  setIsPatientToggled,
+  isDoctorToggled,
+  setIsDoctorToggled,
+  selectedOptionDoctor,
+  setSelectedOptionDoctor,
+  selectedOptionPatient,
+  setSelectedOptionPatient,
+  handleSelectLanguageDoctor,
+  handleSelectLanguagePatient,
+  togglePatientRecording,
+  toggleDoctorRecording,
+  onClose,
+
+
+}) => {
   const langs = Object.keys(JsonData)
-  const [isPatientToggled, setIsPatientToggled] = useState(false);
-  const [isDoctorToggled, setIsDoctorToggled] = useState(false);
+//   const [isPatientToggled, setIsPatientToggled] = useState(false);
+//   const [isDoctorToggled, setIsDoctorToggled] = useState(false);
 
-  const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('English');
-  const [selectedOptionPatient, setSelectedOptionPatient] = useState('English');
-  const [mediaRecorder, setMediaRecorder] = useState(null);
-  const [audioChunks, setAudioChunks] = useState([]);
+//   const [selectedOptionDoctor, setSelectedOptionDoctor] = useState('English');
+//   const [selectedOptionPatient, setSelectedOptionPatient] = useState('English');
+//   const [mediaRecorder, setMediaRecorder] = useState(null);
+//   const [audioChunks, setAudioChunks] = useState([]);
 
-  const handleSelectLanguageDoctor = (option) => {
-    setSelectedOptionDoctor(option);
-  };
+//   const handleSelectLanguageDoctor = (option) => {
+//     setSelectedOptionDoctor(option);
+//   };
 
-  const handleSelectLanguagePatient = (option) => {
-    setSelectedOptionPatient(option);
-  };
+//   const handleSelectLanguagePatient = (option) => {
+//     setSelectedOptionPatient(option);
+//   };
 
-  useEffect(() => {
-    return () => {
-      mediaRecorder?.stream.getTracks().forEach(track => track.stop());
-    };
-  }, [mediaRecorder]);
+//   useEffect(() => {
+//     return () => {
+//       mediaRecorder?.stream.getTracks().forEach(track => track.stop());
+//     };
+//   }, [mediaRecorder]);
 
-  const startRecording = async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const recorder = new MediaRecorder(stream);
-    let tempChunks = [];
+//   const startRecording = async () => {
+//     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+//     const recorder = new MediaRecorder(stream);
+//     let tempChunks = [];
 
-    recorder.ondataavailable = event => {
-        if (event.data.size > 0) {
-            tempChunks.push(event.data);
-        }
-    };
+//     recorder.ondataavailable = event => {
+//         if (event.data.size > 0) {
+//             tempChunks.push(event.data);
+//         }
+//     };
 
-    recorder.onstop = async () => {
-        // Ensure you create the Blob here, once recording is stopped and data is fully available
-        const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
-        await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
-        // Reset audioChunks state if necessary, or handle accordingly
-        tempChunks = [];
-    };
+//     recorder.onstop = async () => {
+//         // Ensure you create the Blob here, once recording is stopped and data is fully available
+//         const audioBlob = new Blob(tempChunks, { type: 'audio/webm;codecs=opus' });
+//         await uploadAudio(audioBlob); // Consider uploading directly in onstop to ensure sequence
+//         // Reset audioChunks state if necessary, or handle accordingly
+//         tempChunks = [];
+//     };
 
-    recorder.start();
-    setMediaRecorder(recorder);
-};
+//     recorder.start();
+//     setMediaRecorder(recorder);
+// };
 
-const stopRecording = () => {
-    if (mediaRecorder) {
-        mediaRecorder.stop(); // This will eventually trigger the onstop event
-    }
-};
-
-
-  const uploadAudio = async (audioBlob) => {
-    const formData = new FormData();
-    // console.log("audioBlob: ",audioBlob);
-    formData.append('audio_file', audioBlob);
-    try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error uploading audio:', error);
-    }
-    setAudioChunks([]); // Reset audio chunks after uploading
-  };
-
-  const togglePatientRecording = async () => {
-    if (!isPatientToggled) {
-      await startRecording();
-    } else {
-      const audioBlob = await stopRecording();
-      // await uploadAudio(audioBlob);
-      const response = await callPatientEndpoint(selectedOptionDoctor);
-      console.log(response);
-    }
-    setIsPatientToggled(!isPatientToggled);
-  };
-
-  const toggleDoctorRecording = async () => {
-    if (!isDoctorToggled) {
-      await startRecording();
-    } else {
-      const audioBlob = await stopRecording();
-      // await uploadAudio(audioBlob);
-      const response = await callDoctorEndpoint(selectedOptionPatient);
-      console.log(response);
-    }
-    setIsDoctorToggled(!isDoctorToggled);
-  };
+//     const stopRecording = () => {
+//         if (mediaRecorder) {
+//             mediaRecorder.stop(); // This will eventually trigger the onstop event
+//         }
+//     };
 
 
-  const callDoctorEndpoint = async (language) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/doctor/${language}`);
-      return response.data; // Assuming the response is JSON data
-    } catch (error) {
-      console.error('Error calling doctor endpoint:', error);
-      return null;
-    }
-  };
+//   const uploadAudio = async (audioBlob) => {
+//     const formData = new FormData();
+//     // console.log("audioBlob: ",audioBlob);
+//     formData.append('audio_file', audioBlob);
+//     try {
+//       const response = await axios.post('http://localhost:5000/upload', formData, {
+//         headers: { 'Content-Type': 'multipart/form-data' },
+//       });
+//       console.log(response.data);
+//     } catch (error) {
+//       console.error('Error uploading audio:', error);
+//     }
+//     setAudioChunks([]); // Reset audio chunks after uploading
+//   };
 
-  const callPatientEndpoint = async (language) => {
-    try {
-      const response = await axios.get(`http://localhost:5000/patient/${language}`);
-      return response.data; // Assuming the response is JSON data
-    } catch (error) {
-      console.error('Error calling doctor endpoint:', error);
-      return null;
-    }
-  };
+//   const togglePatientRecording = async () => {
+//     if (!isPatientToggled) {
+//       await startRecording();
+//     } else {
+//       const audioBlob = await stopRecording();
+//       // await uploadAudio(audioBlob);
+//       const response = await callPatientEndpoint(selectedOptionDoctor);
+//       console.log(response);
+//     }
+//     setIsPatientToggled(!isPatientToggled);
+//   };
+
+//   const toggleDoctorRecording = async () => {
+//     if (!isDoctorToggled) {
+//       await startRecording();
+//     } else {
+//       const audioBlob = await stopRecording();
+//       // await uploadAudio(audioBlob);
+//       const response = await callDoctorEndpoint(selectedOptionPatient);
+//       console.log(response);
+//     }
+//     setIsDoctorToggled(!isDoctorToggled);
+//   };
+
+
+//   const callDoctorEndpoint = async (language) => {
+//     try {
+//       const response = await axios.get(`http://localhost:5000/doctor/${language}`);
+//       return response.data; // Assuming the response is JSON data
+//     } catch (error) {
+//       console.error('Error calling doctor endpoint:', error);
+//       return null;
+//     }
+//   };
+
+//   const callPatientEndpoint = async (language) => {
+//     try {
+//       const response = await axios.get(`http://localhost:5000/patient/${language}`);
+//       return response.data; // Assuming the response is JSON data
+//     } catch (error) {
+//       console.error('Error calling doctor endpoint:', error);
+//       return null;
+//     }
+//   };
 
   return (
     <div className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${open ? "translate-x-0" : "-translate-x-96"}`}>
