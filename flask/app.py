@@ -3,7 +3,8 @@ from speechToText import transcribe_long_running_audio
 from recordAudio import create_audio
 from fixInput import fix_input
 from removeJargon import removeJargon
-from translate import translate
+from translate import translateForDoctor
+from translate import translateForPatient
 
 app = Flask(__name__)
 
@@ -17,14 +18,11 @@ def doctor(langauge):
 
     jargon_removed = removeJargon(fixed_input)
 
-    translated_to_patient_language = translate(langauge, jargon_removed)
+    translated_to_patient_language = translateForDoctor(langauge, jargon_removed)
+
+    return translated_to_patient_language
 
 
-    output = {
-        "translation": translated_to_patient_language
-    }
-
-    return output
 
 @app.route("/patient/<string:langauge>")
 def patient(language):
@@ -34,16 +32,14 @@ def patient(language):
 
     fixed_input = fix_input(text)
 
-    translated_to_doctor_language = translate(language, fixed_input)
+    # JSON object
+    # {
+    #     "translation": "translated text",
+    #     "symptoms": ["symptom1", "symptom2", "symptom3"]
+    # }
+    translated_to_patient_lang = translate(language, fixed_input)
 
-    # symptoms = getSymptomsFromText(translated)
-
-    output = {
-        "translation": translated_to_doctor_language,
-        "symptoms": symptoms
-    }
-
-    return output
+    return translated_to_patient_lang
 
 if __name__ == '__main__':
     app.run()
